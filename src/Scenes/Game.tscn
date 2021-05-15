@@ -1,7 +1,6 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://assets/theme/gdquest.theme" type="Theme" id=1]
-[ext_resource path="res://src/UI/debug/DebugPanel.cs" type="Script" id=2]
 [ext_resource path="res://src/UI/debug/DebugPanel.tscn" type="PackedScene" id=3]
 [ext_resource path="res://assets/tilesets/valley.tres" type="TileSet" id=4]
 [ext_resource path="res://assets/tilesets/prototype.tres" type="TileSet" id=5]
@@ -36,7 +35,6 @@ anchor_bottom = 0.0
 margin_right = 408.0
 margin_bottom = 102.0
 mouse_filter = 2
-script = ExtResource( 2 )
 
 [node name="Level1" type="Node2D" parent="."]
 

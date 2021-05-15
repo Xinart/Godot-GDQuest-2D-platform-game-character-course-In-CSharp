@@ -1,0 +1,25 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://src/Player/StateMachine/StateMachine.cs" type="Script" id=1]
+[ext_resource path="res://Assets/sprites/robi.png" type="Texture" id=2]
+[ext_resource path="res://src/Player/StateMachine/State.cs" type="Script" id=3]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 16, 16 )
+
+[node name="Player" type="KinematicBody2D"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 0, -16 )
+shape = SubResource( 1 )
+
+[node name="robi" type="Sprite" parent="CollisionShape2D"]
+position = Vector2( -4, -26 )
+scale = Vector2( 0.297904, 0.297904 )
+texture = ExtResource( 2 )
+
+[node name="StateMachine" type="Node" parent="."]
+script = ExtResource( 1 )
+
+[node name="State" type="Node" parent="StateMachine"]
+script = ExtResource( 3 )
