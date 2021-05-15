@@ -1,0 +1,15 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://src/Player/Camera/ShakingCamera.cs" type="Script" id=1]
+
+[node name="ShakingCamera" type="Camera2D"]
+current = true
+smoothing_enabled = true
+smoothing_speed = 3.0
+script = ExtResource( 1 )
+duration = 0.8
+amplitude = 8.0
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.8
+one_shot = true
