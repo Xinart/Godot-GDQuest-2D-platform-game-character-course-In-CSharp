@@ -33,7 +33,7 @@ public class CameraRig : Position2D
         if (velocity == null) velocity = Vector2.Zero;
         if (_is_active)
         {
-            Vector2 mouse_position = GetGlobalMousePosition();
+            Vector2 mouse_position = GetLocalMousePosition();
             float distance_ratio = Mathf.Clamp(
                 mouse_position.Length(), mouse_range.x, mouse_range.y
                 ) / mouse_range.y;

@@ -1,6 +1,7 @@
 using System;
 using Godot;
 using Godot.Collections;
+// We cannot set icons to appear in the Editor with the related node script object with C# 
 
 /// <summary>
 /// Initializes states and delegate engine callbacks to the active states
@@ -21,6 +22,11 @@ public class StateMachine : Node
         }
     }
 
+    public StateMachine()
+    {
+        // Add the state machine to his dedicated group to recognize it from the states
+        AddToGroup("state_machine");
+    }
     // Called when the node enters the scene tree for the first time.
     public override async void _Ready()
     {
@@ -39,22 +45,32 @@ public class StateMachine : Node
         state.UnhandledInput(@event);
     }
 
-    public void _init()
+    public void transition_to(String target_state_name)
     {
-        AddToGroup("state_machine");
+        State target_state = get_state(GetChildren(), target_state_name);
+        // GetNode<State>("MoveStates/" + target_state_name);
+        // get_state(this, target_state_name)
+
+        state.exit();
+        state = target_state;
+        state.enter();
+
     }
 
-    public void transition_to(String target_state_path, Dictionary msg = null)
+    public State get_state(Godot.Collections.Array state_list, String target_state_name)
     {
-        if (HasNode(target_state_path))
+        foreach (State state in state_list)
         {
-            State target_state = GetNode<State>(target_state_path);
-
-            state.exit();
-            state = target_state;
-            state.enter(msg);
+            // Check name of the script attached to the Node
+            if (state.GetType().Name == target_state_name)
+            {
+                return state;
+            }
+            else if (state.GetChildren().Count != 0)
+            {
+                return get_state(state.GetChildren(), target_state_name);
+            }
         }
+        return null;
     }
-
-
 }

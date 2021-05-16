@@ -45,6 +45,7 @@ public class DebugPanel : PanelContainer
     {
         _container = GetNode<VBoxContainer>("VBoxContainer/MarginContainer/VBoxContainer");
         _title = GetNode<Label>("VBoxContainer/ReferenceName");
+        reference = GetNode<Node>(reference_path);
         if (reference != null) _setup();
     }
 
@@ -81,7 +82,7 @@ public class DebugPanel : PanelContainer
     private void _update()
     {
         if (Engine.EditorHint) return;
-        String[] search_array = properties;
+        Array search_array = properties;
         foreach (String property in properties)
         {
             Label label = _container.GetChild<Label>(Array.IndexOf(search_array, property));

@@ -1,13 +1,23 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://src/Player/StateMachine/StateMachine.cs" type="Script" id=1]
 [ext_resource path="res://Assets/sprites/robi.png" type="Texture" id=2]
-[ext_resource path="res://src/Player/StateMachine/State.cs" type="Script" id=3]
+[ext_resource path="res://src/Player/Camera/CameraRig.tscn" type="PackedScene" id=3]
+[ext_resource path="res://src/Player/Player.cs" type="Script" id=4]
+[ext_resource path="res://src/Player/StateMachine/States/MovementStates/MovementState.cs" type="Script" id=5]
+[ext_resource path="res://src/Player/StateMachine/States/MovementStates/RunState.cs" type="Script" id=6]
+[ext_resource path="res://src/Player/StateMachine/States/MovementStates/AirState.cs" type="Script" id=7]
+[ext_resource path="res://src/Player/StateMachine/States/MovementStates/IdleState.cs" type="Script" id=8]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 16, 16 )
 
 [node name="Player" type="KinematicBody2D"]
+scale = Vector2( 2, 2 )
+collision_mask = 10
+script = ExtResource( 4 )
+
+[node name="CameraRig" parent="." instance=ExtResource( 3 )]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( 0, -16 )
@@ -20,6 +30,16 @@ texture = ExtResource( 2 )
 
 [node name="StateMachine" type="Node" parent="."]
 script = ExtResource( 1 )
+initial_state = NodePath("MoveStates/IdleState")
 
-[node name="State" type="Node" parent="StateMachine"]
-script = ExtResource( 3 )
+[node name="MoveStates" type="Node" parent="StateMachine"]
+script = ExtResource( 5 )
+
+[node name="IdleState" type="Node" parent="StateMachine/MoveStates"]
+script = ExtResource( 8 )
+
+[node name="RunState" type="Node" parent="StateMachine/MoveStates"]
+script = ExtResource( 6 )
+
+[node name="AirState" type="Node" parent="StateMachine/MoveStates"]
+script = ExtResource( 7 )

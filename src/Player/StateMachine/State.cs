@@ -4,43 +4,49 @@ using Godot.Collections;
 // We cannot set icons to appear in the Editor with the related node script object with C# 
 
 /// <summary>
-/// State interface to use in hierarchical State machines
+/// Base class to use for states
 /// </summary>
-public class State : Node
+public abstract class State : Node
 {
+    /// <summary>
+    /// State machine handling the state
+    /// </summary>
     protected StateMachine _state_machine;
 
     // Called when the node enters the scene tree for the first time.
-    public void Ready()
+    public override void _Ready()
     {
         _state_machine = _get_state_machine(this);
     }
 
-    public void PhysicsProcess(float delta)
+    /// <summary>
+    /// Called by the state machine in the _PhysicsProcess engine method
+    /// if this state is currently handled by the machine state
+    /// </summary>
+    public abstract void PhysicsProcess(float delta);
+
+    /// <summary>
+    /// Called by the state machine in the _UnhandledInput engine method
+    /// if this state is currently handled by the machine state
+    /// </summary>
+    public abstract void UnhandledInput(InputEvent @event);
+
+    private StateMachine _get_state_machine(Node node)
     {
-    }
-    public void UnhandledInput(InputEvent @event)
-    {
-
-    }
-
-    public void enter(Dictionary msg = null)
-    {
-
-    }
-
-    public void exit()
-    {
-
-    }
-
-
-    public StateMachine _get_state_machine(Node node)
-    {
-        if (node != null && node.IsInGroup("state_machine"))
+        if (node != null && !node.IsInGroup("state_machine"))
         {
             return _get_state_machine(node.GetParent());
         }
         else return (StateMachine)node;
     }
+
+    /// <summary>
+    /// Define actions to do when we enter in this state
+    /// </summary>
+    public abstract void enter();
+
+    /// <summary>
+    /// Define actions to do when we exit this state
+    /// </summary>
+    public abstract void exit();
 }
