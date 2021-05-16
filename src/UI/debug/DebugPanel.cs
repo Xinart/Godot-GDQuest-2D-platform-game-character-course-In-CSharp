@@ -81,7 +81,7 @@ public class DebugPanel : PanelContainer
     private void _update()
     {
         if (Engine.EditorHint) return;
-        String[] search_array = properties;
+        Array search_array = properties;
         foreach (String property in properties)
         {
             Label label = _container.GetChild<Label>(Array.IndexOf(search_array, property));
